@@ -101,8 +101,10 @@ module.exports = new ApplicationCommand({
         ]
     },
     options: {
-        cooldown: 5000
+        cooldown: 5000,
+        isAdmin: true
     },
+
     /**
      * 
      * @param {DiscordBot} client 
@@ -168,7 +170,7 @@ module.exports = new ApplicationCommand({
 
                 const collector = message.createMessageComponentCollector({
                     componentType: ComponentType.StringSelect,
-                    time: 60000 // 1 minute collector
+                    time: 60000 
                 });
 
                 collector.on('collect', async i => {

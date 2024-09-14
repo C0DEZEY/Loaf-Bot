@@ -24,7 +24,6 @@ class DiscordBot extends Client {
     login_attempts = 0;
     login_timestamp = 0;
     statusMessages = [
-        { name: "Skidibi daa, patootie doo! Thinking about world domination... or maybe just a nap.", type: 4 },
         { name: "Meow? Skidibi? What's the difference? Both are important.", type: 4 },
         { name: "I LOVE GAMBLING! ", type: 4 },
         { name: "AWH DANG IT!", type: 4 },
@@ -36,13 +35,11 @@ class DiscordBot extends Client {
         { name: "Planning my next mischief. Maybe a sock full of skidibi? Or maybe just a world tour.", type: 4 },
         { name: "Skidibi daa, patootie doo! Thinking about world domination... or maybe just a nap.", type: 4 },
         { name: "ALL ON BLACK", type: 4 },
-        { name: "Meow? Skidibi? What's the difference? Both are important.", type: 4 },
         { name: "Purring so hard, might turn into a skidibi factory.", type: 4 },
         { name: "Laser pointers? Check. Catnip? Check. Skidibi fuel? Essential.", type: 4 },
         { name: "Dreaming of a world where all treats are skidibi-flavored.", type: 4 },
         { name: "Planning my next mischief. Maybe a sock full of skidibi? Or maybe just a world tour.", type: 4 },
         { name: "Skidibi daa, patootie doo! Thinking about world domination... or maybe just a nap.", type: 4 },
-        { name: "Meow? Skidibi? What's the difference? Both are important.", type: 4 },
         { name: "Purring so hard, might turn into a skidibi factory.", type: 4 },
         { name: "Laser pointers? Check. Catnip? Check. Skidibi fuel? Essential.", type: 4 },
         { name: "Dreaming of a world where all treats are skidibi-flavored.", type: 4 },

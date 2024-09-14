@@ -4,3 +4,6 @@ src/config.js
 .env
 database.yml
 terminal.log
+tasks.json
+users.json
+warnings.json

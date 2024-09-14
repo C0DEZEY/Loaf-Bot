@@ -36,6 +36,18 @@ const handleApplicationCommandOptions = async (interaction, options, command) =>
         }
     }
 
+    if (options.isAdmin) {
+       if (!interaction.member.permissions.has("ADMINISTRATOR")) {
+            await interaction.reply({
+                content: config.messages.NOT_ADMINISTRATOR,
+                ephemeral: true
+            });
+
+            return false;
+        }
+    }
+    
+
     if (options.guildOwner) {
         if (interaction.user.id !== interaction.guild.ownerId) {
             await interaction.reply({

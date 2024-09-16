@@ -55,7 +55,7 @@ module.exports = new ApplicationCommand({
         const msDuration = TimeUnit(duration); // Convert duration to milliseconds (you may need a library for this)
         
         try {
-            await member.timeout(msDuration, reason);
+            await member.disableCommunicationUntil(msDuration, reason);
             interaction.reply({ content: `Timed out ${targetUser.tag} for ${duration}. Reason: ${reason}`, ephemeral: true });
         } catch (error) {
             console.error(error);

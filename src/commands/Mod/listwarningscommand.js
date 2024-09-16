@@ -4,7 +4,7 @@ const DiscordBot = require("../../client/DiscordBot");
 const ApplicationCommand = require("../../structure/ApplicationCommand");
 
 // Load warnings from the JSON file
-let warnings = require("../../data/warnings.json");
+let warnings = require("./warnings.json");
 
 module.exports = new ApplicationCommand({
     command: {

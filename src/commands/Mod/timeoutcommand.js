@@ -57,6 +57,7 @@ module.exports = new ApplicationCommand({
         try {
             await member.disableCommunicationUntil(msDuration, reason);
             interaction.reply({ content: `Timed out ${targetUser.tag} for ${duration}. Reason: ${reason}`, ephemeral: true });
+            memeber.send(`You have been timedout for ${msDuration}ms, for ${reason}`)
         } catch (error) {
             console.error(error);
             interaction.reply({ content: "An error occurred while trying to timeout the user.", ephemeral: true });

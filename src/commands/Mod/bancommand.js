@@ -5,7 +5,7 @@ const ApplicationCommand = require("../../structure/ApplicationCommand");
 module.exports = new ApplicationCommand({
     command: {
         name: 'ban',
-        description: 'Ban a user from the server',
+        description: 'ban a user from the server',
         type: 1,
         options: [
             {
@@ -38,30 +38,18 @@ module.exports = new ApplicationCommand({
      * @param {ChatInputCommandInteraction} interaction 
      */
     run: async (client, interaction) => {
-        // Check if the user executing the command has the proper permissions
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-            return interaction.reply({ content: "You don't have permission to ban members.", ephemeral: true });
-        }
 
         const targetUser = interaction.options.getUser('user');
         const reason = interaction.options.getString('reason');
-        const length = interaction.options.getString('length'); // You can parse this if you want to manage timed bans
+        const length = interaction.options.getString('length'); 
 
         const member = interaction.guild.members.cache.get(targetUser.id);
 
         if (!member) {
             return interaction.reply({ content: "User not found in the guild.", ephemeral: true });
         }
-
-        // Prevent banning admins or higher roles
-        if (member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({ content: "You cannot ban an administrator.", ephemeral: true });
-        }
-
         try {
-            // Ban the user
             await member.ban({ reason });
-            
             interaction.reply({ content: `Banned ${targetUser.tag} for ${reason}. Length: ${length}`, ephemeral: true });
         } catch (error) {
             console.error(error);

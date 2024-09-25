@@ -30,14 +30,8 @@ module.exports = new ApplicationCommand({
      * @param {ChatInputCommandInteraction} interaction 
      */
     run: async (client, interaction) => {
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
-            return interaction.reply({ content: "You don't have permission to view warnings.", ephemeral: true });
-        }
-
         const targetUser = interaction.options.getUser('user');
         const guildId = interaction.guild.id;
-
-        // Check if the guild or the user has any warnings
         if (!warnings[guildId] || !warnings[guildId][targetUser.id]) {
             return interaction.reply({ content: `${targetUser.tag} has no warnings.`, ephemeral: true });
         }

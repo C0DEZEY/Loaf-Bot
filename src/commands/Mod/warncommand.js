@@ -4,7 +4,7 @@ const DiscordBot = require("../../client/DiscordBot");
 const ApplicationCommand = require("../../structure/ApplicationCommand");
 
 // Load warnings from the JSON file
-let warnings = require(./warnings.json");
+let warnings = require("./warnings.json");
 
 // Helper function to save warnings back to the file
 const saveWarnings = () => {
@@ -41,25 +41,17 @@ module.exports = new ApplicationCommand({
      * @param {ChatInputCommandInteraction} interaction 
      */
     run: async (client, interaction) => {
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
-            return interaction.reply({ content: "You don't have permission to warn members.", ephemeral: true });
-        }
 
         const targetUser = interaction.options.getUser('user');
         const reason = interaction.options.getString('reason');
         const guildId = interaction.guild.id;
 
-        // Check if the guild has warnings stored, if not, initialize it
         if (!warnings[guildId]) {
             warnings[guildId] = {};
         }
-
-        // Check if the user already has warnings
         if (!warnings[guildId][targetUser.id]) {
             warnings[guildId][targetUser.id] = [];
         }
-
-        // Add the new warning to the user's list
         warnings[guildId][targetUser.id].push({
             reason: reason,
             date: new Date().toISOString()
@@ -70,8 +62,6 @@ module.exports = new ApplicationCommand({
 
         // Send a confirmation message
         interaction.reply({ content: `Warned ${targetUser.tag} for: ${reason}`, ephemeral: true });
-
-        // Optionally send a DM to the user
         try {
             await targetUser.send(`You have been warned for: ${reason}`);
         } catch (error) {

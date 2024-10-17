@@ -69,7 +69,7 @@ module.exports = new ApplicationCommand({
 
         // Mark the task as verified
         task.isVerified = true;
-        task.isFinished = true; // Optionally mark it as finished too
+        task.isFinished = true;
         writeJsonFile(tasksFilePath, tasks);
 
         // Add XP to the user

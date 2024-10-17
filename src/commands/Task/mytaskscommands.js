@@ -2,6 +2,7 @@ const { ChatInputCommandInteraction, ApplicationCommandOptionType, EmbedBuilder,
 const DiscordBot = require("../../client/DiscordBot");
 const ApplicationCommand = require("../../structure/ApplicationCommand");
 const fs = require('fs');
+const { channel } = require("diagnostics_channel");
 const tasksFilePath = './tasks.json';
 
 // Helper function to read JSON files
@@ -9,6 +10,12 @@ function readJsonFile(filePath) {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
+
+
+// Helper function to write to JSON files
+function writeJsonFile(filePath, data) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+}
 // Helper function to get the number of days between two dates
 function daysUntil(deadline) {
     const currentDate = new Date();
@@ -31,7 +38,7 @@ function generateTaskEmbeds(tasks, userId) {
         return new EmbedBuilder()
             .setColor('#00AAFF')
             .setTitle(`Task ${index + 1}/${userTasks.length}`)
-            .setDescription(`**Task:** ${task.task}\n**Deadline:** ${task.deadline}\n**Finished:** ${task.isFinished}\n**Priority:** ${priority} ${warning}`)
+            .setDescription(`**Task:** ${task.task}\n**Deadline:** ${task.deadline}\n**Finished:** ${task.isFinished}\n **Priority:** ${priority} ${warning}`)
             .setTimestamp();
     });
 
@@ -77,7 +84,12 @@ module.exports = new ApplicationCommand({
                     .setCustomId('next')
                     .setLabel('Next')
                     .setStyle(ButtonStyle.Primary)
-                    .setDisabled(embeds.length === 1)
+                    .setDisabled(embeds.length === 1),
+                new ButtonBuilder()
+                .setCustomId('complete')
+                .setLabel('Mark completed')
+                .setStyle(ButtonStyle.Success)
+                .setDisabled(embeds.length === 1)
             );
 
         const message = await interaction.reply({
@@ -88,7 +100,7 @@ module.exports = new ApplicationCommand({
 
         const collector = message.createMessageComponentCollector({
             componentType: ComponentType.Button,
-            time: 60000 // 1 minute collector
+            time: 60000 
         });
 
         collector.on('collect', async i => {
@@ -97,11 +109,30 @@ module.exports = new ApplicationCommand({
                 return;
             }
 
+
+
             if (i.customId === 'prev') {
                 currentPage = Math.max(currentPage - 1, 0);
             } else if (i.customId === 'next') {
                 currentPage = Math.min(currentPage + 1, embeds.length - 1);
-            }
+            } else if (i.customId === 'complete') {
+              
+                const taskIndex = currentPage;
+                const task = userTasks[taskIndex];
+                
+                if (task.isFinished) {
+                    await i.update({ content: 'This task is already marked as completed.', ephemeral: true });
+                    return;
+                } else {
+                    task.isFinished = true;
+
+                    writeJsonFile(tasksFilePath,tasks)
+                    await i.update({ content: `Task marked as completed: "${task.task}" please wait for an admin to verify this.`  });
+                    return;
+                }
+
+                
+            };
 
             await i.update({
                 embeds: [embeds[currentPage]],
@@ -117,7 +148,12 @@ module.exports = new ApplicationCommand({
                                 .setCustomId('next')
                                 .setLabel('Next')
                                 .setStyle(ButtonStyle.Primary)
-                                .setDisabled(currentPage === embeds.length - 1)
+                                .setDisabled(currentPage === embeds.length - 1),
+                            new ButtonBuilder()
+                                .setCustomId('complete')
+                                .setLabel('Mark completed')
+                                .setStyle(ButtonStyle.Success)
+                                .setDisabled(embeds.length === 1)
                         )
                 ]
             });

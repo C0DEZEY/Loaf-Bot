@@ -2,10 +2,25 @@
   "1277363080464171112": [],
   "333616865781743616": [
     {
-      "task": "Finish Gui Scripts When Given.",
-      "deadline": "2024-09-02",
+      "task": "make a screen shake script so the camera shakes to the beat of the music",
+      "deadline": "2024-10-30",
+      "isFinished": true,
+      "isVerified": false,
+      "isHighPriority": false
+    },
+    {
+      "task": "Finish inventory data store / UI",
+      "deadline": "2025",
       "isFinished": false,
-      "isVerified": false
+      "isVerified": false,
+      "isHighPriority": false
+    },
+    {
+      "task": "Finish main game script",
+      "deadline": "2028",
+      "isFinished": false,
+      "isVerified": false,
+      "isHighPriority": false
     }
   ],
   "881580810770214954": [
@@ -24,8 +39,8 @@
     {
       "task": "submit files of all the vfx/models for cat accessories",
       "deadline": "2024-09-012",
-      "isFinished": false,
-      "isVerified": false,
+      "isFinished": true,
+      "isVerified": true,
       "isHighPriority": false
     }
   ],
@@ -60,6 +75,15 @@
       "isFinished": false,
       "isVerified": false,
       "lastReminder": null
+    }
+  ],
+  "1229872409595613217": [
+    {
+      "task": "Make Music  Idealy 2 songs",
+      "deadline": "2025",
+      "isFinished": false,
+      "isVerified": false,
+      "isHighPriority": false
     }
   ]
 }
